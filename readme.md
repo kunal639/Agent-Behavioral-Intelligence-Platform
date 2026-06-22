@@ -369,6 +369,50 @@ AUDIT_REPORT.pdf
 
 ---
 
+## Scalability
+
+ObserverModel is designed around a decoupled pipeline:
+
+- Ingestion Layer
+- Normalization Layer
+- Detection Layer
+- Intelligence Layer
+
+New agent platforms can be integrated by implementing a new normalizer without modifying existing detectors.
+
+New behavioral detectors can be added independently without affecting telemetry ingestion.
+
+The architecture supports both:
+- Post-session analysis
+- Real-time streaming analysis
+
+allowing the platform to evolve from local development monitoring to enterprise-scale governance workflows.
+
+---
+
+## Innovation
+
+Unlike traditional observability tools that focus on trace collection and dashboards, ObserverModel introduces deterministic behavioral governance for AI agents.
+
+Key innovations include:
+
+- Rule-based behavioral anomaly detection
+- FinOps attribution tied to specific agent actions
+- Real-time runtime monitoring
+- Executive-ready governance reporting
+- Separation of deterministic detection and AI-powered diagnostics
+
+---
+
+## Current MVP Limitations
+
+- Claude Code telemetry format is currently the primary integration target.
+- Cost attribution is estimated from telemetry windows and not direct vendor billing APIs.
+- Runtime enforcement is planned but not enabled in the current MVP.
+- Production-scale distributed telemetry ingestion is outside current MVP scope.
+
+---
+
 # Future Roadmap
 
 ### Runtime Enforcement
