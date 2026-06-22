@@ -2,6 +2,9 @@
 
 > Real-time FinOps, security guardrails, and behavioral governance for AI coding agents.
 
+[![Pitch Deck](https://img.shields.io/badge/Pitch-Deck-blue?style=for-the-badge)](./pitch_deck/agent_intelligence_proposal.pdf)
+[![Demo Video](https://img.shields.io/badge/Demo-Video-red?style=for-the-badge)](https://youtube.com/your-demo-link)
+
 ## Overview
 
 Autonomous coding agents can execute hundreds of tool calls, read sensitive files, modify repositories, and consume significant API budgets without providing clear visibility into why those actions occurred.
