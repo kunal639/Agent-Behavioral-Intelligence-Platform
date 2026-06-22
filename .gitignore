@@ -8,8 +8,11 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
-# Generated Reports
+# Data & Generated Reports
 *.log
-*.jsonl
 AUDIT_REPORT.md
 AUDIT_REPORT.pdf
+
+# Force Git to track everything inside the data directory
+!data/
+!data/**
