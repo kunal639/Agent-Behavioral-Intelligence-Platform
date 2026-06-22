@@ -16,7 +16,7 @@ These decisions reflect MVP constraints and may evolve as the platform matures.
 |-----------|----------|
 | [Pitch Deck](./pitch_deck/agent_intelligence_proposal.pdf) | Project presentation |
 | [Architecture Decisions](./ARCHITECTURE_DECISIONS.md) | Engineering tradeoffs and design rationale |
-| AUDIT_REPORT.pdf | Example executive audit artifact |
+| [AUDIT_REPORT](./sample_output/AUDIT_REPORT,pdf) | Example executive audit artifact |
 
 ## Overview
 
