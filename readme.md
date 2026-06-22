@@ -2,8 +2,21 @@
 
 > Real-time FinOps, security guardrails, and behavioral governance for AI coding agents.
 
-[![Pitch Deck](https://img.shields.io/badge/Pitch-Deck-blue?style=for-the-badge)](./pitch_deck/agent_intelligence_proposal.pdf)
-[![Demo Video](https://img.shields.io/badge/Demo-Video-red?style=for-the-badge)](https://youtube.com/your-demo-link)
+# Architecture Decisions Record (ADR)
+
+This document captures the major engineering decisions made during the development of ObserverModel.
+
+The objective is to provide a transparent record of tradeoffs, assumptions, and implementation rationale behind the telemetry ingestion pipeline, detection engine, FinOps attribution system, and runtime governance architecture.
+
+These decisions reflect MVP constraints and may evolve as the platform matures.
+
+## 📚 Technical Documentation
+
+| Document | Purpose |
+|-----------|----------|
+| [Pitch Deck](./pitch_deck/agent_intelligence_proposal.pdf) | Project presentation |
+| [Architecture Decisions](./ARCHITECTURE_DECISIONS.md) | Engineering tradeoffs and design rationale |
+| AUDIT_REPORT.pdf | Example executive audit artifact |
 
 ## Overview
 
