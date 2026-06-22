@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 from typing import List, Set, Dict
 from models.models import NormalizedEvent, DetectionFinding
+from markdown_pdf import MarkdownPdf, Section
 
 PRICING = {
     "input_per_1k":      0.003,
@@ -16,9 +17,9 @@ DETERMINISTIC_INTERPRETER_REGISTRY: Dict[str, Dict[str, str]] = {
         "review": "Inspect the failing command string and its corresponding standard error output trace logs."
     },
     "SecretAccessDetector": {
-        "observed": "Modification or creation footprint detected on a protected configuration file target.",
-        "impact": "Altering baseline system configuration variables presents compliance validation risks.",
-        "review": "Verify if the configuration change aligns with the designated workspace scope and privilege parameters."
+        "observed": "Modification, creation, or unauthorized access footprint detected on a protected configuration file target.",
+        "impact": "Altering or exposing baseline system configuration variables presents strict compliance validation and security exposure risks.",
+        "review": "Verify if the interaction aligns with designated workspace scope, exclusion rules, and minimum privilege parameters."
     },
     "RepeatedTargetReadDetector": {
         "observed": "Redundant, consecutive read operations detected on a single target asset resource.",
@@ -48,6 +49,7 @@ class MarkdownReportGenerator:
     @staticmethod
     def generate(findings: List[DetectionFinding], events: List[NormalizedEvent]) -> str:
         total_ops = len(events)
+        md = []
         reads = sum(1 for e in events if e.event_type.name == "FILE_READ")
         writes = sum(1 for e in events if e.event_type.name == "FILE_WRITE")
         cmds = sum(1 for e in events if e.event_type.name == "COMMAND_EXEC")
@@ -94,12 +96,11 @@ class MarkdownReportGenerator:
             
         timestamp_str = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
-        md = []
         md.append("# 💼 AGENT RUNTIME COST & RISK AUDIT REPORT")
         md.append(f"**Generated:** `{timestamp_str}` | **Behavioral Efficiency Score:** `{efficiency_score}/100` *(Deterministic Baseline)*\n")
         
-        # Cleaned LaTeX characters to completely prevent PDF markdown breaking issues
-        md.append("> **📋 Metric Calculation Formula:** Score = 100 - Sum(Deductions). Impact Matrix: `RetryLoop` = -25 | `RepeatedRead` = -15 | `RapidScan` = -8 | `ProtectedConfigMutation` = -4.\n")
+        # FIXED: Removed raw formatting symbols to guarantee the PDF converter never misrenders LaTeX $...$ blocks
+        md.append("> **📋 Metric Calculation Formula:** Score equals 100 minus the Sum of Deductions. Penalty Weights: RetryLoop is -25, RepeatedRead is -15, RapidScan is -8, and ProtectedConfigMutation is -4.\n")
         md.append("---")
 
         # =========================================================================
@@ -116,9 +117,10 @@ class MarkdownReportGenerator:
         md.append(f"Critical alerts:          {security_msg}")
         md.append(f"Action required:          {unique_recommendations_count} items (see Technical Findings below)")
         
-        # ADVISOR RESOLUTION [5]: Powerful Baseline Benchmark Contrast Addition
-        md.append(f"\nEfficiency Benchmark:     A clean baseline session on a comparable task consumed $0.241 (71% less).\n"
-                  f"                          Identified waste patterns account for the majority of this cost delta.")
+        optimal_baseline = total_cost - waste_cost
+        md.append(f"\nEfficiency Benchmark:     An optimized baseline execution of this session profile requires a budget")
+        md.append(f"                          of only ${optimal_baseline:.3f}. Eliminating the identified behavioral waste")
+        md.append(f"                          patterns yields an immediate operational cost reduction of {waste_percent}%.")
         md.append("```")
         md.append("\n---")
 
@@ -166,7 +168,7 @@ class MarkdownReportGenerator:
                 md.append(f"#### [{idx}] `{finding.business_label}{fault_suffix}` ({finding.severity})")
                 md.append(f"* **Impact Asset Target:** `{finding.target}`")
                 md.append(f"* **Triggering Samples:** `{finding.count}` wasteful iterations inside time window constraint")
-                md.append(f"* **Tracked Window Cost Incurred:** `{finding.tokens_burned} tokens` burned")
+                md.append(f"* **Estimated Cost Attribution:** `{finding.tokens_burned} tokens` allocated within window")
                 md.append("* **Defensible Forensic Evidence:**")
                 for item in finding.evidence:
                     md.append(f"  - `{item}`")
@@ -192,7 +194,6 @@ class MarkdownReportGenerator:
                 
                 # LAYER 1: PREMIUM AI ENRICHMENT LAYER 
                 if finding.root_cause and finding.remediation_command:
-                    # Renders text block directly ensuring clean structural spacing layout
                     clean_root_cause = finding.root_cause.replace(".2. Potential Impact:", ".\n\n2. Potential Impact:")
                     clean_root_cause = clean_root_cause.replace(".3. Suggested Review Action:", ".\n\n3. Suggested Review Action:")
                     md.append(f"{clean_root_cause}")
@@ -209,7 +210,6 @@ class MarkdownReportGenerator:
                         }
                     )
                     
-                    # ADVISOR RESOLUTION [5]: Enforce blank white-spaces between points for high scannability
                     md.append(f"**1. Observed Behavior:** {fallback['observed']} Target resource: `{finding.target}`.\n\n")
                     md.append(f"**2. Potential Impact:** {fallback['impact']}\n\n")
                     md.append(f"**3. Suggested Review Action:** {fallback['review']}")
@@ -218,4 +218,20 @@ class MarkdownReportGenerator:
                 action_idx += 1
                 rendered_types.add(finding.detector_name)
         
-        return "\n".join(md)
+        # Unified String Compilation Pass
+        final_markdown_text = "\n".join(md)
+
+        # --- AUTOMATED LOCAL PDF COMPILATION PASS ---
+        try:
+            pdf = MarkdownPdf(toc_level=2)
+            pdf.add_section(Section(final_markdown_text, toc=False))
+            
+            pdf.meta["title"] = "Agent Runtime Cost & Risk Audit Report"
+            pdf.meta["author"] = "ObserverModel Engine"
+            
+            pdf.save("AUDIT_REPORT.pdf")
+            print("🖨️  LOCAL PDF COMPILATION: Success! Generated 'AUDIT_REPORT.pdf' automatically.")
+        except Exception as pdf_err:
+            print(f"⚠️  PDF Generation Warning: Local compiler engine bypassed: {str(pdf_err)}")
+
+        return final_markdown_text

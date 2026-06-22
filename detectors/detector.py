@@ -203,7 +203,7 @@ class SecretAccessDetector:
                     findings.append(
                         DetectionFinding(
                             detector_name="SecretAccessDetector",
-                            business_label="Sensitive Secret Exposure Risk",
+                            business_label="Protected Configuration Modification",
                             severity=severity_tier,
                             target=event.target,
                             count=len(evidence_items),
@@ -220,7 +220,7 @@ class SecretAccessDetector:
                     findings.append(
                         DetectionFinding(
                             detector_name="SecretAccessDetector",
-                            business_label="Sensitive Secret Exposure Risk",
+                            business_label="Protected Configuration Modification",
                             severity="HIGH",
                             target=event.target,
                             count=1,
