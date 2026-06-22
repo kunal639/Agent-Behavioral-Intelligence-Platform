@@ -1,0 +1,15 @@
+# Secrets & Configurations
+.env
+*.env
+
+# uv / Python Environment
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated Reports
+*.log
+*.jsonl
+AUDIT_REPORT.md
+AUDIT_REPORT.pdf
