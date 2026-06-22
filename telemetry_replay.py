@@ -25,10 +25,4 @@ def main():
         sys.exit(0)
 
 if __name__ == "__main__":
-    import sys
-    # If someone tries to run this worker file manually without arguments
-    if len(sys.argv) < 2:
-        print("\n👀 OBSERVERMODEL INFO:")
-        print("This file is a background streaming worker managed by the system.")
-        print("👉 Please run the main dashboard instead using: uv run monitor.py\n")
-        sys.exit(0)
+    main()
