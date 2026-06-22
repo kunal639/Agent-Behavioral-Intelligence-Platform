@@ -2,14 +2,6 @@
 
 > Real-time FinOps, security guardrails, and behavioral governance for AI coding agents.
 
-# Architecture Decisions Record (ADR)
-
-This document captures the major engineering decisions made during the development of ObserverModel.
-
-The objective is to provide a transparent record of tradeoffs, assumptions, and implementation rationale behind the telemetry ingestion pipeline, detection engine, FinOps attribution system, and runtime governance architecture.
-
-These decisions reflect MVP constraints and may evolve as the platform matures.
-
 ## 📚 Technical Documentation
 
 | Document | Purpose |
@@ -37,6 +29,16 @@ The platform is designed around a simple principle:
 > Same telemetry input → Same diagnosis → Same output.
 
 No hallucinated findings. No black-box reasoning in the detection engine.
+
+---
+
+# Architecture Decisions Record (ADR)
+
+This document captures the major engineering decisions made during the development of ObserverModel.
+
+The objective is to provide a transparent record of tradeoffs, assumptions, and implementation rationale behind the telemetry ingestion pipeline, detection engine, FinOps attribution system, and runtime governance architecture.
+
+These decisions reflect MVP constraints and may evolve as the platform matures.
 
 ---
 
