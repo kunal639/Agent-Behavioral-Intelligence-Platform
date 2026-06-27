@@ -1,4 +1,4 @@
-# 👀 ObserverModel — Agent Runtime Governance for Autonomous Coding Agents
+# ObserverModel — Agent Runtime Governance for Autonomous Coding Agents
 
 > Real-time FinOps, security guardrails, and behavioral governance for AI coding agents.
 
